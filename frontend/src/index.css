@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Oxanium:wght@500;600;700;800;900&display=swap');
+
+/* ZeroDay: Global Design Tokens & Variables */
+
+:root {
+  /* Design Tokens from Redesign Brief */
+  --bg-primary: #0B0D11;
+  --bg-secondary: #11151B;
+  --bg-elevated: #171C24;
+  --bg-canvas: #0B0D11;
+  --bg-surface: #11151B;
+  --bg-card: #11151B;
+  --bg-card-elevated: #171C24;
+  --bg-terminal: #07090D;
+  --bg-glass: rgba(17, 21, 27, 0.9);
+
+  --border-subtle: #2A313C;
+  --border-medium: #363F4D;
+
+  --text-primary: #F3F5F8;
+  --text-secondary: #A6AFBD;
+  --text-muted: #7E8899;
+  --text-mono: #E5ECF4;
+  --surface-subtle: rgba(243, 245, 248, 0.04);
+  --surface-border: rgba(243, 245, 248, 0.1);
+
+  /* Canonical ZeroDay Accent (#EF9F73) */
+  --accent-primary: #EF9F73;
+  --accent-primary-hover: #F4B38E;
+  --accent-primary-subtle: rgba(239, 159, 115, 0.12);
+  --accent-primary-border: rgba(239, 159, 115, 0.3);
+
+  /* Primary Accent Blue */
+  --accent-blue: #3987FF;
+  --accent-blue-hover: #5A9CFF;
+  --accent-blue-glow: transparent;
+  --accent-blue-subtle: rgba(57, 135, 255, 0.1);
+  --accent-blue-border: rgba(57, 135, 255, 0.3);
+
+  /* Red Team Accent */
+  --crimson-primary: #EF6464;
+  --crimson-glow: transparent;
+  --crimson-subtle: rgba(239, 100, 100, 0.12);
+  --crimson-border: rgba(239, 100, 100, 0.28);
+
+  /* Verified Success */
+  --emerald-primary: #6FCF97;
+  --emerald-glow: transparent;
+  --emerald-subtle: rgba(111, 207, 151, 0.12);
+  --emerald-border: rgba(111, 207, 151, 0.28);
+
+  /* Amber Warning */
+  --amber-primary: #F2C94C;
+  --amber-subtle: rgba(242, 201, 76, 0.12);
+
+  /* Fonts */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+  --font-oxanium: 'Oxanium', sans-serif;
+  --font-onest: 'Onest', sans-serif;
+}
+
+/* Disable programming font ligatures so code symbols like != never render as mathematical ≠ */
+pre, code, kbd, samp, .monospace, .font-mono, [class*="code"] {
+  font-variant-ligatures: none !important;
+  font-feature-settings: "liga" 0, "calt" 0 !important;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Custom Web Scrollbars (Thinner, accent hover with opacity 0.6) */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #2A313C transparent;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #2A313C;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(239, 159, 115, 0.6);
+}
+
+/* Global outline & glow elimination on interactive elements */
+button,
+button:focus,
+button:focus-visible,
+button:active,
+a,
+a:focus,
+a:focus-visible,
+input,
+input:focus,
+input:focus-visible {
+  outline: none !important;
+  box-shadow: none;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.monospace {
+  font-family: var(--font-mono);
+}
+
+/* Typography Gradient & Color Utilities */
+.gradient-accent {
+  background: linear-gradient(135deg, #F2F5F8 20%, #6E9FD0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-headline {
+  background: linear-gradient(135deg, #F2F5F8 0%, #D4DCE5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.accent-text { color: var(--accent-blue); }
+.emerald-text { color: var(--emerald-primary); }
+.amber-text { color: var(--amber-primary); }
+.crimson-text { color: var(--crimson-primary); }

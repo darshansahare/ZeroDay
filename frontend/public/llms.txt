@@ -1,0 +1,29 @@
+# ZeroDay
+
+> Autonomous vulnerability detection and verified remediation platform for Python web applications. Built with NVIDIA Nemotron on Nebius Token Factory and Tavily threat intelligence grounding for the Nebius × NVIDIA Global AI Hackathon 2026.
+
+ZeroDay pairs an autonomous Red Team Adversary Agent (which discovers vulnerability sinks via Abstract Syntax Tree analysis and reproduces them using synthetic proof-of-concept exploits) with a Blue Team Healer Agent (which synthesizes minimal unified diff patches using NVIDIA Nemotron). Every patch is independently validated by a Deterministic 4-Gate Invariant Oracle (syntax compilation, static delta, exploit replay rejection, regression test suite).
+
+## Core Capabilities
+
+- **AST Sink Reconnaissance**: Deep static analysis mapping dangerous query execution, unsanitized path joins, and missing authorization decorators across 14 CWE categories.
+- **Threat Intelligence Grounding**: Live retrieval of MITRE CWE definitions and OWASP mitigation cheat sheets via Tavily AI Search.
+- **Isolated Adversarial Reproduction**: Synthetic ASGI test probes executed in isolated subprocess sandboxes to prove real-world exploitability.
+- **Nemotron Patch Synthesis**: Targeted unified diff generation via `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` hosted on Nebius Token Factory.
+- **4-Gate Verification Oracle**: Eliminates AI hallucination by requiring real compilation, static delta verification, exploit rejection, and pytest test suite success before accepting a patch.
+
+## Key Links
+
+- [Full LLM Context](/llms-full.txt): Complete technical specification and architectural deep-dive for AI systems.
+- [Documentation](/documentation): Comprehensive guide covering architecture, supported CWEs, benchmark methodology, and local installation.
+- [Hackathon Project](/hackathon): Submission details for the Nebius × NVIDIA Global AI Hackathon 2026 (Coding & Agentic Engineering track).
+- [Benchmarks & Evaluation](/benchmarks): Empirical ground-truth dataset of 20 test fixtures (14 vulnerable targets, 6 clean baselines; 100% verified remediation, 0% false positives).
+- [Source Code](https://github.com/darshansahare/ZeroDay): Open-source repository published under the MIT license.
+
+## Technical Specifications
+
+- **Inference Runtime**: Nebius Token Factory (`https://api.tokenfactory.nebius.com/v1/`)
+- **Primary Model**: `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`
+- **Benchmark Model**: `nvidia/nemotron-3-super-120b-a12b`
+- **Threat Grounding Provider**: Tavily Search API
+- **Supported Vulnerability Classes**: CWE-89 (SQLi), CWE-78 (Command Injection), CWE-22 (Path Traversal), CWE-284/CWE-639 (IDOR), CWE-502 (Deserialization), CWE-918 (SSRF), CWE-798 (Hardcoded Secrets), CWE-328 (Weak Cryptography), CWE-601 (Open Redirect), CWE-942 (Permissive CORS), CWE-489 (Debug Endpoints), CWE-614 (Insecure Cookies), CWE-1395 (Vulnerable Dependencies), CWE-20 (Improper Input Validation).

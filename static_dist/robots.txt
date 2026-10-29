@@ -1,0 +1,97 @@
+# ZeroDay Robots & AI Crawler Directives
+# https://zeroday.dev/robots.txt
+
+User-agent: *
+Allow: /
+Allow: /arena
+Allow: /benchmarks
+Allow: /docs
+Allow: /hackathon
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /sitemap.xml
+Allow: /og-image.png
+Allow: /favicon.ico
+Allow: /favicon.svg
+Disallow: /arena/runs/
+Disallow: /api/
+
+# OpenAI Search & ChatGPT Crawlers
+User-agent: OAI-SearchBot
+Allow: /
+Allow: /arena
+Allow: /benchmarks
+Allow: /docs
+Allow: /hackathon
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /arena/runs/
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /arena
+Allow: /benchmarks
+Allow: /docs
+Allow: /hackathon
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /arena/runs/
+Disallow: /api/
+
+# Perplexity AI Search Crawler
+User-agent: PerplexityBot
+Allow: /
+Allow: /arena
+Allow: /benchmarks
+Allow: /docs
+Allow: /hackathon
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /arena/runs/
+Disallow: /api/
+
+# Anthropic Claude Crawler
+User-agent: ClaudeBot
+Allow: /
+Allow: /arena
+Allow: /benchmarks
+Allow: /docs
+Allow: /hackathon
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /arena/runs/
+Disallow: /api/
+
+# Apple Searchbot
+User-agent: Applebot
+Allow: /
+Allow: /arena
+Allow: /benchmarks
+Allow: /docs
+Allow: /hackathon
+Allow: /llms.txt
+Allow: /llms-full.txt
+Disallow: /arena/runs/
+Disallow: /api/
+
+# Google & Bing Web Crawlers
+User-agent: Googlebot
+Allow: /
+Allow: /arena
+Allow: /benchmarks
+Allow: /docs
+Allow: /hackathon
+Disallow: /arena/runs/
+Disallow: /api/
+
+User-agent: Bingbot
+Allow: /
+Allow: /arena
+Allow: /benchmarks
+Allow: /docs
+Allow: /hackathon
+Disallow: /arena/runs/
+Disallow: /api/
+
+Sitemap: https://zeroday.dev/sitemap.xml

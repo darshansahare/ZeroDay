@@ -1,0 +1,28 @@
+# Environment variables & secrets (NEVER COMMIT)
+.env
+.env.*
+!.env.example
+.zd_admin_key
+.admin_key
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.cache/
+*.db
+sandbox_orders.db
+sandboxes/
+
+# Node / Frontend
+node_modules/
+.npm
+dist/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

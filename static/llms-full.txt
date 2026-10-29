@@ -1,0 +1,112 @@
+# ZeroDay — Complete Technical Specification & AI Knowledge Base
+
+## Executive Overview
+
+ZeroDay is an open-source autonomous vulnerability detection and verified remediation platform engineered for modern Python web microservices (FastAPI, Flask, Starlette). Built for the Nebius × NVIDIA Global AI Hackathon 2026 (Coding & Agentic Engineering track), the platform addresses a critical flaw in current automated security workflows: traditional SAST tools produce excessive false positives, while generic LLM coding assistants hallucinate unverified or breaking patches.
+
+ZeroDay resolves this through a closed-loop adversarial architecture:
+1. **Red Team Agent**: Locates dangerous sinks via Abstract Syntax Tree (AST) static analysis and demonstrates real-world exploitability using an isolated subprocess probe.
+2. **Blue Team Agent**: Synthesizes standard unified diff patches using NVIDIA Nemotron models hosted on Nebius Token Factory, guided by live Tavily threat intelligence.
+3. **Verification Oracle**: An independent 4-gate verification system that tests the patch against compilation, static sink delta, exploit replay, and regression test suites.
+
+## System Architecture & Component Breakdown
+
+### 1. Abstract Syntax Tree (AST) Reconnaissance Engine
+- **Implementation**: Native Python `ast` module (`app/analysis/ast_scanner.py`).
+- **Mechanism**: Traverses Python module ASTs without executing untrusted code. Detects Call nodes, Attribute lookups, Binary operations, and function decorators.
+- **Coverage**: 14 distinct vulnerability patterns mapped to MITRE CWE standards.
+- **Precision**: Targets direct string interpolation into query sinks (`f-strings`, `.format()`, `%`), dangerous path joins (`Path / input`), unconstrained subprocess invocation (`shell=True`), and unauthenticated storage lookups.
+
+### 2. Threat Intelligence Grounding (Tavily AI Search)
+- **Implementation**: HTTP client querying the Tavily Search API (`app/intelligence/tavily_client.py`).
+- **Mechanism**: Upon sink detection, generates a targeted search query combining the detected CWE ID, framework name (e.g. FastAPI, SQLAlchemy), and vulnerability type.
+- **Context Injected**: Authoritative MITRE definitions, OWASP prevention cheat sheets, and verified language-specific parameterization patterns.
+
+### 3. Isolated Adversarial Exploit Reproduction
+- **Implementation**: Temporary filesystem workspaces + ASGI test runner (`app/sandbox/reproduction.py`).
+- **Mechanism**: Generates targeted synthetic HTTP payloads (e.g. `' OR '1'='1` for SQLi, `../../etc/passwd` for path traversal, unauthorized tenant IDs for IDOR).
+- **Execution Boundary**: Runs in a sandboxed child process or ASGI TestClient. Monitors HTTP status codes, exfiltrated payload fragments, and invariant breaches.
+
+### 4. Patch Synthesis via NVIDIA Nemotron on Nebius Token Factory
+- **Primary Model**: `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`
+- **Benchmark Model**: `nvidia/nemotron-3-super-120b-a12b`
+- **Inference Runtime**: Nebius Token Factory (`https://api.tokenfactory.nebius.com/v1/`), providing low-latency token streaming via OpenAI-compatible endpoints.
+- **Prompt Engineering**: Schema-constrained system prompt instructing the model to output strictly valid unified diff formats (`--- a/path\n+++ b/path\n@@ ... @@`). Disallows markdown wrappers, conversational filler, or third-party dependencies outside standard libraries.
+
+### 5. Deterministic 4-Gate Invariant Verification Oracle
+A patch is classified as `VERIFIED_SECURE` if and only if it passes all four gates:
+- **Gate 1 (Syntax AST)**: Verifies that the modified file compiles cleanly via `ast.parse()`.
+- **Gate 2 (Static Analysis Delta)**: Rescans the patched code using the AST reconnaissance engine, verifying that the targeted sink is absent and no new sinks were introduced.
+- **Gate 3 (Exploit Replay Rejection)**: Re-executes the exact Red Team exploit payload against the patched sandbox. Verifies that the exploit is rejected (e.g. HTTP 401/403/404 or parameterized lookup failure) with 0 records exfiltrated.
+- **Gate 4 (Regression Test Suite)**: Executes the repository's `pytest` test suite to verify that business logic and legitimate endpoints continue to function without error.
+
+## Empirical Benchmark Evaluation
+
+ZeroDay is evaluated against 20 standardized, reproducible test fixtures (`data/benchmarks.json`):
+- **Positive Controls (14 Vulnerable Targets)**:
+  - CWE-89 (SQL Injection in order query) -> VERIFIED_SECURE
+  - CWE-78 (OS Command Injection in diagnostic ping) -> VERIFIED_SECURE
+  - CWE-22 (Path Traversal in document retrieval) -> VERIFIED_SECURE
+  - CWE-639 (IDOR / Broken Access Control in user profile) -> VERIFIED_SECURE
+  - CWE-502 (Insecure Deserialization in cart cache) -> VERIFIED_SECURE
+  - CWE-918 (SSRF in webhook fetcher) -> VERIFIED_SECURE
+  - CWE-798 (Hardcoded JWT secret in auth service) -> VERIFIED_SECURE
+  - CWE-328 (Weak MD5 hashing for passwords) -> VERIFIED_SECURE
+  - CWE-601 (Open Redirect in OAuth callback) -> VERIFIED_SECURE
+  - CWE-942 (Permissive CORS with credentials enabled) -> VERIFIED_SECURE
+  - CWE-489 (Active /debug/env endpoint in production) -> VERIFIED_SECURE
+  - CWE-614 (Missing HttpOnly and Secure cookie flags) -> VERIFIED_SECURE
+  - CWE-1395 (Vulnerable pinned dependencies) -> VERIFIED_SECURE
+  - CWE-20 (Unbounded raw request body validation) -> VERIFIED_SECURE
+- **Negative Controls (6 Clean Baselines)**:
+  - Secure parameterized SQL query -> SCAN_COMPLETE_NO_FINDINGS (0 findings)
+  - Secure path resolution using is_relative_to -> SCAN_COMPLETE_NO_FINDINGS (0 findings)
+  - Secure command execution using argument list -> SCAN_COMPLETE_NO_FINDINGS (0 findings)
+  - Secure domain-whitelisted URL fetcher -> SCAN_COMPLETE_NO_FINDINGS (0 findings)
+  - Secure tenant authorization check -> SCAN_COMPLETE_NO_FINDINGS (0 findings)
+  - Secure PBKDF2/SHA-256 password hashing -> SCAN_COMPLETE_NO_FINDINGS (0 findings)
+
+### Summary Statistics
+- **Detection Recall**: 100.0% (14 / 14 vulnerable targets discovered)
+- **Verified Remediation Rate**: 100.0% (14 / 14 patches passed all 4 oracle gates)
+- **False Positive Rate**: 0.0% (0 false alarms generated across 6 clean baselines)
+- **Precision**: 100.0% (14 / (14 + 0))
+- **F1 Score**: 1.00
+
+## Quickstart & Installation Guide
+
+### Prerequisites
+- Python 3.12 or newer
+- Node.js 18 or newer
+- Git
+
+### Installation
+```bash
+git clone https://github.com/darshansahare/ZeroDay.git
+cd ZeroDay
+python -m venv venv
+source venv/bin/activate  # On Windows: .\venv\Scripts\activate
+pip install -r requirements.txt
+
+cd frontend
+npm install
+npm run build
+cd ..
+
+cp .env.example .env
+# Set NEBIUS_API_KEY and TAVILY_API_KEY in .env
+
+python main.py
+```
+
+### Running Tests
+```bash
+pytest tests/
+```
+
+## Hackathon Context & Attribution
+- **Event**: Nebius × NVIDIA Global AI Hackathon 2026
+- **Track**: Coding & Agentic Engineering
+- **Author**: Darshan Sahare (https://github.com/darshansahare)
+- **Repository**: https://github.com/darshansahare/ZeroDay
+- **License**: MIT License
