@@ -6,7 +6,7 @@
 
 **Find the flaw. Engineer the fix. Prove it with evidence.**
 
-An AI-assisted security engineering platform combining code analysis, intelligent investigation, autonomous remediation, and evidence-oriented verification.
+An AI-assisted security engineering platform combining code analysis, intelligent investigation, autonomous remediation and evidence-oriented verification.
 
 <br>
 
@@ -30,11 +30,11 @@ An AI-assisted security engineering platform combining code analysis, intelligen
 
 ## Security doesn't end when a vulnerability is found.
 
-Finding a vulnerability is one thing. Understanding it, engineering a meaningful fix, and verifying the result is another.
+Finding a vulnerability is one thing. Understanding it, engineering a meaningful fix and verifying the result is another.
 
 **ZeroDay is built around that entire journey.**
 
-It brings AI-assisted code analysis, intelligent investigation, remediation, and controlled verification into one security engineering workflow — helping developers move from a suspicious code path toward an actionable, evidence-backed result.
+It brings AI-assisted code analysis, intelligent investigation, remediation and controlled verification into one security engineering workflow; helping developers move from a suspicious code path toward an actionable, evidence-backed result.
 
 **The core idea:** Don't stop at finding the flaw. Work toward proving the fix.
 
@@ -48,12 +48,12 @@ It brings AI-assisted code analysis, intelligent investigation, remediation, and
 
 ## Core Capabilities
 
-- **Code-aware security analysis** — inspect code and identify potentially vulnerable paths.
-- **AI-assisted investigation** — use an AI-driven workflow to help reason about findings.
-- **Automated remediation** — generate candidate fixes for identified issues.
-- **Controlled validation** — execute supported checks in a controlled environment.
-- **Verification-first workflow** — evaluate remediation using verification gates and supporting evidence.
-- **Developer-focused interface** — bring the security workflow into a unified web experience.
+- **Code-aware security analysis** — inspect code and identify potentially vulnerable paths
+- **AI-assisted investigation** — use an AI-driven workflow to help reason about findings
+- **Automated remediation** — generate candidate fixes for identified issues
+- **Controlled validation** — execute supported checks in a controlled environment
+- **Verification-first workflow** — evaluate remediation using verification gates and supporting evidence
+- **Developer-focused interface** — bring the security workflow into a unified web experience
 
 
 ## Built for the Nebius × NVIDIA Global AI Hackathon
@@ -62,7 +62,7 @@ It brings AI-assisted code analysis, intelligent investigation, remediation, and
 
 ### The Problem
 
-AI can help developers write code, but generating a patch is not the same as proving that it works. Security analysis, root-cause investigation, remediation, and verification are often disconnected steps. A proposed fix can pass basic tests while leaving the underlying vulnerability unresolved.
+AI can help developers write code, but generating a patch is not the same as proving that it works. Security analysis, root-cause investigation, remediation and verification are often disconnected steps. A proposed fix can pass basic tests while leaving the underlying vulnerability unresolved.
 
 ### Our Approach
 
@@ -70,14 +70,14 @@ AI can help developers write code, but generating a patch is not the same as pro
 
 Instead of stopping at a suspicious code path or an AI-generated patch, ZeroDay coordinates a sequence of specialized stages:
 
-- **Target Repository:** Analyze the target codebase to identify potentially vulnerable code paths.
-- **Tavily Threat Research:** Look up relevant security advisories and vulnerability guidance, with an offline fallback.
-- **Red Team Agent:** Run exploit tests against the target application to check whether the suspected vulnerability is reproducible.
-- **Nemotron Security Analysis:** Investigate the vulnerability's root cause and determine a suitable remediation approach using NVIDIA Nemotron via Nebius Token Factory.
-- **Blue Team Agent:** Generate and apply a security fix targeting the identified vulnerability.
-- **Sandbox Rematch & Verification:** Rerun tests and replay exploit attempts to check whether the fix works.
-- **Verified Results (Pass):** Record the outcome when the required verification checks pass.
-- **Rollback to Baseline (Fail):** Restore the saved baseline if verification fails.
+- **Target Repository:** Analyze the target codebase to identify potentially vulnerable code paths
+- **Tavily Threat Research:** Look up relevant security advisories and vulnerability guidance, with an offline fallback
+- **Red Team Agent:** Run exploit tests against the target application to check whether the suspected vulnerability is reproducible
+- **Nemotron Security Analysis:** Investigate the vulnerability's root cause and determine a suitable remediation approach using NVIDIA Nemotron via Nebius Token Factory
+- **Blue Team Agent:** Generate and apply a security fix targeting the identified vulnerability
+- **Sandbox Rematch & Verification:** Rerun tests and replay exploit attempts to check whether the fix works
+- **Verified Results (Pass):** Record the outcome when the required verification checks pass
+- **Rollback to Baseline (Fail):** Restore the saved baseline if verification fails
 
 ## Core Technology
 
@@ -122,15 +122,15 @@ Use the run commands documented for the current backend and frontend setup. If u
 
 ## Roadmap
 
-- Expand supported vulnerability patterns and code-analysis coverage.
-- Improve remediation quality and verification reliability.
-- Strengthen test coverage and reproducibility.
-- Improve reporting and evidence presentation.
-- Extend support for additional languages and project types.
+- Expand supported vulnerability patterns and code-analysis coverage
+- Improve remediation quality and verification reliability
+- Strengthen test coverage and reproducibility
+- Improve reporting and evidence presentation
+- Extend support for additional languages and project types
 
 ## Contributing
 
-Contributions, bug reports, and suggestions are welcome. Open an issue to discuss a proposed change before submitting a pull request.
+Contributions, bug reports and suggestions are welcome. Open an issue to discuss a proposed change before submitting a pull request.
 
 ## License
 
