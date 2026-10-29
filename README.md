@@ -136,9 +136,3 @@ Contributions, bug reports and suggestions are welcome. Open an issue to discuss
 
 Released under the [MIT License](LICENSE).
 
-## Author
-
-**Darshan Sahare**
-
-[GitHub](https://github.com/darshansahare)
-
